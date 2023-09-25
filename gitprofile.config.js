@@ -84,7 +84,7 @@ const config = {
       description:
         'Lead software engineer for ML pedestrian detection system.',
       imageUrl: 'https://www.freep.com/gcdn/presto/2021/12/13/PDTF/9b00d469-ed1f-480d-90e8-9371375d7f71-Ford_12132021_kd413.jpg?width=660&height=378&fit=crop&format=pjpg&auto=webp',
-      link: 'https://www.freep.com/story/money/business/michigan/2021/12/14/ford-self-driving-food-shuttle-art-sides/6497128001/',
+      link: 'https://www.detroitnews.com/story/business/autos/ford/2021/12/14/ford-autonomous-shuttle-deliver-food-detroit-senior-citizens/6498168001/',
     },
     {
       title: 'Ford Self-Driving Vehicle (3rd Gen)',
