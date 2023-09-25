@@ -1,8 +1,15 @@
 import { AiOutlineControl } from 'react-icons/ai';
 import { skeleton } from '../../helpers/utils';
 import PropTypes from 'prop-types';
+import { useState } from 'react'; // Import useState from React
 
 const ThemeChanger = ({ theme, setTheme, loading, themeConfig }) => {
+  const [isOpen, setIsOpen] = useState(false); // Add state for dropdown visibility
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   const changeTheme = (e, selectedTheme) => {
     e.preventDefault();
     document.querySelector('html').setAttribute('data-theme', selectedTheme);
@@ -11,6 +18,8 @@ const ThemeChanger = ({ theme, setTheme, loading, themeConfig }) => {
       localStorage.setItem('gitprofile-theme', selectedTheme);
 
     setTheme(selectedTheme);
+
+    setIsOpen(false); // Close the dropdown after selecting a theme
   };
 
   return (
@@ -44,6 +53,7 @@ const ThemeChanger = ({ theme, setTheme, loading, themeConfig }) => {
               <div
                 tabIndex={0}
                 className="btn btn-ghost m-1 normal-case opacity-50 text-base-content"
+                onClick={toggleDropdown} // Open/close dropdown when clicking the button
               >
                 <AiOutlineControl className="inline-block w-5 h-5 stroke-current md:mr-2" />
                 <span className="hidden md:inline">Change Theme</span>
@@ -55,31 +65,35 @@ const ThemeChanger = ({ theme, setTheme, loading, themeConfig }) => {
                   <path d="M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z" />
                 </svg>
               </div>
-              <div
-                tabIndex={0}
-                className="mt-16 overflow-y-auto shadow-2xl top-px dropdown-content max-h-96 w-52 rounded-lg bg-base-200 text-base-content z-10"
-              >
-                <ul className="p-4 menu compact">
-                  {[
-                    themeConfig.defaultTheme,
-                    ...themeConfig.themes.filter(
-                      (item) => item !== themeConfig.defaultTheme
-                    ),
-                  ].map((item, index) => (
-                    <li key={index}>
-                      {/* eslint-disable-next-line */}
-                      <a
-                        onClick={(e) => changeTheme(e, item)}
-                        className={`${theme === item ? 'active' : ''}`}
-                      >
-                        <span className="opacity-60 capitalize">
-                          {item === themeConfig.defaultTheme ? 'Default' : item}
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {isOpen && ( // Render the dropdown content only when isOpen is true
+                <div
+                  tabIndex={0}
+                  className="mt-16 overflow-y-auto shadow-2xl top-px dropdown-content max-h-96 w-52 rounded-lg bg-base-200 text-base-content z-10"
+                >
+                  <ul className="p-4 menu compact">
+                    {[
+                      themeConfig.defaultTheme,
+                      ...themeConfig.themes.filter(
+                        (item) => item !== themeConfig.defaultTheme
+                      ),
+                    ].map((item, index) => (
+                      <li key={index}>
+                        {/* eslint-disable-next-line */}
+                        <a
+                          onClick={(e) => changeTheme(e, item)}
+                          className={`${theme === item ? 'active' : ''}`}
+                        >
+                          <span className="opacity-60 capitalize">
+                            {item === themeConfig.defaultTheme
+                              ? 'Default'
+                              : item}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           )}
         </div>
