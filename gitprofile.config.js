@@ -157,7 +157,7 @@ const config = {
       class="text-primary" href="https://github.com/trevtravtrev/"
       target="_blank"
       rel="noreferrer"
-    >GitProfile</a> and ❤️`,
+    >❤️</a>`,
 };
 
 export default config;
