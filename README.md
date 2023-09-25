@@ -74,7 +74,7 @@
 ✓ [Projects Section](#projects)  
 ✓ [Blog Posts Section](#blog-posts)
 
-To view a live example, **[click here](https://arifszn.github.io/gitprofile)**.
+To view a live example **[click here](https://arifszn.github.io/gitprofile)**.
 
 Or try it **[online](https://stackblitz.com/edit/gitprofile)**.
 
