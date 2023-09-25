@@ -80,16 +80,16 @@ const config = {
   // To hide the `My Projects` section, keep it empty.
   externalProjects: [
     {
-      title: 'Ford Autonomous Food Delivery Vehicle',
+      title: 'Ford Autonomous Delivery Vehicle',
       description:
-        'I was the lead software engineer for the machine learning computer vision pedestrian detection system.',
+        'Lead software engineer for ML pedestrian detection system.',
       imageUrl: 'https://www.freep.com/gcdn/presto/2021/12/13/PDTF/9b00d469-ed1f-480d-90e8-9371375d7f71-Ford_12132021_kd413.jpg?width=660&height=378&fit=crop&format=pjpg&auto=webp',
       link: 'https://www.freep.com/story/money/business/michigan/2021/12/14/ford-self-driving-food-shuttle-art-sides/6497128001/',
     },
     {
-      title: 'Ford Self Driving Vehicle (3rd Gen)',
+      title: 'Ford Self-Driving Vehicle (3rd Gen)',
       description:
-        'I architected and developed the embedded internal and external audio communication system.',
+        'Lead software engineer for smart audio communication system.',
       imageUrl: 'https://www.cnet.com/a/img/resize/616a371712d3884e15b1cf6bb1d796eff695aedf/hub/2019/06/13/5e3f4432-62a8-416d-9cc9-d088a051f8ac/argo-ai-detroit-promo.jpg?auto=webp&width=1920',
       link: 'https://www.cnet.com/roadshow/news/argo-ai-third-generation-self-driving-development-car-detroit/',
     },
