@@ -63,8 +63,8 @@ const config = {
   certifications: [
     {
       name: 'Autonomous Vehicle to Vehicle Communication',
-      body: 'Innovative technology that enables real-time audio and visual communication between passengers of separate autonomous vehicles. A US patent application (US84517399) has been submitted and is currently pending.',
-      year: '2023',
+      body: 'Real-time audio and visual communication system between passengers riding in separate autonomous vehicles.',
+      year: 'Pending (US84517399)',
       link: ''
     },
   ],
