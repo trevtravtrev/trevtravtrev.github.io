@@ -95,25 +95,8 @@ const GitProfile = ({ config }) => {
           })
           .then((response) => {
             let data = response.data;
-            // Modified code starts here
-            const modifiedRepoData = data.items.map((item) => {
-              // Check if the repo has an image or gif with certain extensions
-              const imageExtensions = ['.jpg', '.gif', '.png']; // Add more if needed
-              let imageUrl = null;
-              for (const extension of imageExtensions) {
-                const fileName = `image${extension}`;
-                if (item.files.find((file) => file.name === fileName)) {
-                  imageUrl = `${item.html_url}/${fileName}`;
-                  break;
-                }
-              }
-              return {
-                ...item,
-                imageUrl,
-              };
-            });
-            // Modified code ends here
-            setRepo(modifiedRepoData);
+
+            setRepo(data.items);
           })
           .catch((error) => {
             handleError(error);
