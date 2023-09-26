@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import HeadTagEditor from './head-tag-editor';
 import ErrorPage from './error-page';
@@ -30,9 +29,6 @@ import ExternalProject from './external-project';
 
 const bgColor = 'bg-base-300';
 
-const [repo, setRepo] = useState([]);
-const [repoImages, setRepoImages] = useState({});
-
 const GitProfile = ({ config }) => {
   const [error, setError] = useState(
     typeof config === 'undefined' && !config ? noConfigError : null
@@ -57,19 +53,12 @@ const GitProfile = ({ config }) => {
     theme && document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  useEffect(() => {
-    if (sanitizedConfig) {
-      setTheme(getInitialTheme(sanitizedConfig.themeConfig));
-      setupHotjar(sanitizedConfig.hotjar);
-      loadData(); // Call loadData here
-    }
-  }, [sanitizedConfig]);
-  
   const loadData = useCallback(() => {
     axios
       .get(`https://api.github.com/users/${sanitizedConfig.github.username}`)
       .then((response) => {
         let data = response.data;
+
         let profileData = {
           avatar: data.avatar_url,
           name: data.name ? data.name : '',
@@ -77,7 +66,7 @@ const GitProfile = ({ config }) => {
           location: data.location ? data.location : '',
           company: data.company ? data.company : '',
         };
-  
+
         setProfile(profileData);
         return data;
       })
@@ -85,18 +74,19 @@ const GitProfile = ({ config }) => {
         let excludeRepo = ``;
         if (userData.public_repos === 0) {
           setRepo([]);
-          setRepoImages({}); // Initialize repoImages as an empty object
           return;
         }
-  
+
         sanitizedConfig.github.exclude.projects.forEach((project) => {
           excludeRepo += `+-repo:${sanitizedConfig.github.username}/${project}`;
         });
-  
-        let query = `user:${sanitizedConfig.github.username}+fork:${!sanitizedConfig.github.exclude.forks}${excludeRepo}`;
-  
+
+        let query = `user:${
+          sanitizedConfig.github.username
+        }+fork:${!sanitizedConfig.github.exclude.forks}${excludeRepo}`;
+
         let url = `https://api.github.com/search/repositories?q=${query}&sort=${sanitizedConfig.github.sortBy}&per_page=${sanitizedConfig.github.limit}&type=Repositories`;
-  
+
         axios
           .get(url, {
             headers: {
@@ -105,44 +95,8 @@ const GitProfile = ({ config }) => {
           })
           .then((response) => {
             let data = response.data;
+
             setRepo(data.items);
-  
-            // Fetch images for each repository
-            const imagePromises = data.items.map((repoData) =>
-              axios
-                .get(
-                  `https://raw.githubusercontent.com/${sanitizedConfig.github.username}/${repoData.name}/main/repo_image.gif`
-                )
-                .then((response) => {
-                  return {
-                    repoName: repoData.name,
-                    imageUrl: response.config.url, // Store the image URL
-                  };
-                })
-                .catch((error) => {
-                  console.error(
-                    `Error fetching image for ${repoData.name}: ${error}`
-                  );
-                  return null; // Handle errors gracefully
-                })
-            );
-  
-            // Wait for all image requests to complete
-            Promise.all(imagePromises)
-              .then((images) => {
-                // Filter out null values (failed requests)
-                const validImages = images.filter((image) => image !== null);
-                // Create an object with repo names as keys and image URLs as values
-                const imageMap = validImages.reduce((acc, image) => {
-                  acc[image.repoName] = image.imageUrl;
-                  return acc;
-                }, {});
-  
-                setRepoImages(imageMap);
-              })
-              .catch((error) => {
-                console.error('Error fetching repository images:', error);
-              });
           })
           .catch((error) => {
             handleError(error);
@@ -155,8 +109,6 @@ const GitProfile = ({ config }) => {
         setLoading(false);
       });
   }, [setLoading]);
-  
-  
 
   const handleError = (error) => {
     console.error('Error:', error);
@@ -238,29 +190,16 @@ const GitProfile = ({ config }) => {
                   <div className="lg:col-span-2 col-span-1">
                     <div className="grid grid-cols-1 gap-6">
                       <ExternalProject
+                          loading={loading}
+                          externalProjects={sanitizedConfig.externalProjects}
+                          googleAnalytics={sanitizedConfig.googleAnalytics}
+                      />
+                      <Project
+                        repo={repo}
                         loading={loading}
-                        externalProjects={sanitizedConfig.externalProjects}
+                        github={sanitizedConfig.github}
                         googleAnalytics={sanitizedConfig.googleAnalytics}
                       />
-                      {/* Add the new code for displaying repository images */}
-                      {repo.map((repoData) => (
-                        <div key={repoData.id}>
-                          <h2>{repoData.name}</h2>
-                          {/* Display the uniform image or gif for this repository */}
-                          {repoImages[repoData.name] && (
-                            <img
-                              src={repoImages[repoData.name]}
-                              alt={`${repoData.name} Image`}
-                            />
-                          )}
-                          {/* Display other repository details as needed */}
-                          <p>Description: {repoData.description}</p>
-                          <p>Language: {repoData.language}</p>
-                          <p>Stars: {repoData.stargazers_count}</p>
-                          <p>Forks: {repoData.forks_count}</p>
-                          {/* Add more details as needed */}
-                        </div>
-                      ))}
                       <Blog
                         loading={loading}
                         googleAnalytics={sanitizedConfig.googleAnalytics}
@@ -276,13 +215,13 @@ const GitProfile = ({ config }) => {
                 <div className="card compact bg-base-100 shadow">
                   <Footer content={sanitizedConfig.footer} loading={loading} />
                   {!sanitizedConfig.themeConfig.disableSwitch && (
-                    <ThemeChanger
-                      theme={theme}
-                      setTheme={setTheme}
-                      loading={loading}
-                      themeConfig={sanitizedConfig.themeConfig}
-                    />
-                  )}
+                        <ThemeChanger
+                          theme={theme}
+                          setTheme={setTheme}
+                          loading={loading}
+                          themeConfig={sanitizedConfig.themeConfig}
+                        />
+                      )}
                 </div>
               </footer>
             </Fragment>
@@ -291,7 +230,7 @@ const GitProfile = ({ config }) => {
       </div>
     </HelmetProvider>
   );
-  
+};
 
 GitProfile.propTypes = {
   config: PropTypes.shape({
