@@ -1,10 +1,11 @@
 import { AiOutlineControl } from 'react-icons/ai';
 import { skeleton } from '../../helpers/utils';
 import PropTypes from 'prop-types';
-import { useState } from 'react'; // Import useState from React
+import { useState, useRef } from 'react'; // Import useRef
 
 const ThemeChanger = ({ theme, setTheme, loading, themeConfig }) => {
-  const [isOpen, setIsOpen] = useState(false); // Add state for dropdown visibility
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null); // Create a ref for the dropdown content
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -21,6 +22,25 @@ const ThemeChanger = ({ theme, setTheme, loading, themeConfig }) => {
 
     setIsOpen(false); // Close the dropdown after selecting a theme
   };
+
+  const calculateDropdownPosition = () => {
+    if (dropdownRef.current) {
+      const dropdownHeight = dropdownRef.current.clientHeight;
+      const windowHeight = window.innerHeight;
+      const buttonRect = dropdownRef.current.getBoundingClientRect();
+
+      // Calculate the top position of the dropdown content
+      let top = buttonRect.bottom + dropdownHeight > windowHeight
+        ? -dropdownHeight
+        : buttonRect.height;
+
+      return { top };
+    }
+
+    return { top: 0 };
+  };
+
+  const dropdownPosition = calculateDropdownPosition();
 
   return (
     <div className="card overflow-visible shadow-lg compact bg-base-100">
@@ -65,10 +85,12 @@ const ThemeChanger = ({ theme, setTheme, loading, themeConfig }) => {
                   <path d="M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z" />
                 </svg>
               </div>
-              {isOpen && ( // Render the dropdown content only when isOpen is true
+              {isOpen && (
                 <div
                   tabIndex={0}
                   className="mt-16 overflow-y-auto shadow-2xl top-px dropdown-content max-h-96 w-52 rounded-lg bg-base-200 text-base-content z-10"
+                  style={{ top: dropdownPosition.top }} // Apply calculated top position
+                  ref={dropdownRef} // Assign the ref to the dropdown content
                 >
                   <ul className="p-4 menu compact">
                     {[
