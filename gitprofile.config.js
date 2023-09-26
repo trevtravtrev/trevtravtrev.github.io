@@ -60,14 +60,14 @@ const config = {
       companyLink: '',
     },
   ],
-  /* certifications: [
+  certifications: [
     {
-      name: 'Lorem ipsum',
-      body: 'Lorem ipsum dolor sit amet',
-      year: 'March 2022',
-      link: 'https://example.com'
+      name: 'Autonomous Vehicle to Vehicle Communication',
+      body: 'Innovative technology that enables real-time audio and visual communication between passengers of separate autonomous vehicles. A US patent application (US84517399) has been submitted and is currently pending.',
+      year: '2023',
+      link: ''
     },
-  ], */
+  ],
   education: [
     {
       institution: 'Wayne State University',
