@@ -62,9 +62,9 @@ const config = {
   ],
   certifications: [
     {
-      name: 'Autonomous Vehicle to Vehicle Communication',
-      body: 'Real-time audio and visual communication system between passengers riding in separate autonomous vehicles.',
-      year: 'Pending (US84517399)',
+      name: 'Autonomous Vehicle to Vehicle Communication (Pending US84517399)',
+      body: 'Live audio and visual communication system between passengers in separate autonomous rideshare vehicles.',
+      year: '',
       link: ''
     },
   ],
