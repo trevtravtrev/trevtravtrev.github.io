@@ -98,7 +98,7 @@ const config = {
       description:
         'A revenue generating automatic Amazon Affiliate bot.',
       imageUrl: 'https://uploads-ssl.webflow.com/64642bf3ebc6b4e23c25fcd1/648809f3c87747c2969cd81b_auto%20affiliate.gif',
-      link: 'https://twitter.com/deallrr',
+      link: 'https://twitter.com/cheapprr',
     },
   ],
   // Display blog posts from your medium or dev account. (Optional)
