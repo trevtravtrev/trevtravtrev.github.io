@@ -173,11 +173,7 @@ const config = {
   },
 
   // Optional Footer. Supports plain text or HTML.
-  footer: `Made with <a 
-      class="text-primary" href="https://github.com/trevtravtrev/"
-      target="_blank"
-      rel="noreferrer"
-    >❤️</a>`,
+  footer: ``,
 };
 
 export default config;
