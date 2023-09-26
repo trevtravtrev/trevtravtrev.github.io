@@ -234,6 +234,6 @@ export const notFoundError = {
 
 export const genericError = {
   status: 500,
-  title: 'Ops!!',
+  title: 'Oops!!',
   subTitle: 'Something went wrong.',
 };
