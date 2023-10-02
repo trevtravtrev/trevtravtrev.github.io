@@ -40,6 +40,8 @@ const config = {
     'Javascript',
     'HTML',
     'CSS',
+    'shell',
+    'bash',
     'SQLite',
     'Git',
     'Docker',
